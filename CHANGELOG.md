@@ -9,6 +9,7 @@
 - 标准化开源项目入口、社区行为准则、支持政策、治理说明和 GitHub Issue/Pull Request 模板。
 - TypeScript Host 与 Python Engine 的 MIT 许可证包元数据。
 - 可重复执行的 `tools/clean.sh` 仓库清理入口。
+- `CONTRIBUTORS.md` 以及 OpenAI Codex 的 AI 辅助开发披露。
 
 ### Changed
 

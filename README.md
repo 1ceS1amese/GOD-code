@@ -26,6 +26,7 @@ GOD-code 将命令行宿主、推理引擎、模型 Provider、工具执行和�
 - [开发与测试](#开发与测试)
 - [文档](#文档)
 - [参与贡献](#参与贡献)
+- [贡献者](#贡献者)
 - [安全](#安全)
 - [许可证](#许可证)
 
@@ -272,6 +273,7 @@ cd ts-host && npm run build && cd ..
 | [`protocol/README.md`](protocol/README.md) | JSON-RPC wire contract |
 | [`design/`](design/) | Phase 设计与实现记录 |
 | [`CHANGELOG.md`](CHANGELOG.md) | 用户可见变更 |
+| [`CONTRIBUTORS.md`](CONTRIBUTORS.md) | 项目维护与辅助贡献说明 |
 | [`RELEASE.md`](RELEASE.md) | 版本与发布流程 |
 
 Phase601 后的完整 lifecycle 验收记录见 [`design/FINAL_RELEASE_AUDIT_AFTER_PHASE_601.md`](design/FINAL_RELEASE_AUDIT_AFTER_PHASE_601.md)。
@@ -286,6 +288,13 @@ Phase601 后的完整 lifecycle 验收记录见 [`design/FINAL_RELEASE_AUDIT_AFT
 - [`GOVERNANCE.md`](GOVERNANCE.md)
 
 提交贡献即表示你有权提交相关内容，并同意该贡献按照项目的 MIT License 发布。
+
+## 贡献者
+
+- **1ceS1amese**：项目发起与维护。
+- **OpenAI Codex**：AI 辅助开发、文档撰写、代码审查与验证支持。
+
+完整说明见 [`CONTRIBUTORS.md`](CONTRIBUTORS.md)。
 
 ## 安全
 
