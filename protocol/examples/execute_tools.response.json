@@ -1,0 +1,16 @@
+{
+  "jsonrpc": "2.0",
+  "id": 7,
+  "result": {
+    "results": [
+      {
+        "ok": true,
+        "output": { "content": "..." }
+      },
+      {
+        "ok": true,
+        "output": { "matches": [] }
+      }
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+[
+  {
+    "event_type": "session_started",
+    "session_id": "session-1",
+    "payload": {
+      "cwd": "<cwd>",
+      "model_adapter": "fake"
+    },
+    "sequence": 0
+  },
+  {
+    "event_type": "turn_started",
+    "session_id": "session-1",
+    "payload": {},
+    "turn_id": "turn-1",
+    "sequence": 1
+  },
+  {
+    "event_type": "tool_call_requested",
+    "session_id": "session-1",
+    "payload": {
+      "tool_call": {
+        "tool_call_id": "tool-call-1",
+        "tool_name": "Bash",
+        "input": {
+          "command": "printf ok"
+        }
+      },
+      "execution_mode": "serial"
+    },
+    "turn_id": "turn-1",
+    "sequence": 2
+  },
+  {
+    "event_type": "tool_result_received",
+    "session_id": "session-1",
+    "payload": {
+      "tool_call_id": "tool-call-1",
+      "tool_name": "Bash",
+      "result": {
+        "ok": true,
+        "output": {
+          "command": "printf ok",
+          "cwd": "<cwd>",
+          "stdout": "ok",
+          "stderr": "",
+          "exit_code": 0
+        }
+      }
+    },
+    "turn_id": "turn-1",
+    "sequence": 3
+  },
+  {
+    "event_type": "assistant_message",
+    "session_id": "session-1",
+    "payload": {
+      "message": {
+        "role": "assistant",
+        "content": "Bash completed with exit code 0.\nstdout:\nok"
+      }
+    },
+    "turn_id": "turn-1",
+    "sequence": 4
+  },
+  {
+    "event_type": "turn_finished",
+    "session_id": "session-1",
+    "payload": {
+      "status": "success",
+      "assistant_message": {
+        "role": "assistant",
+        "content": "Bash completed with exit code 0.\nstdout:\nok"
+      }
+    },
+    "turn_id": "turn-1",
+    "sequence": 5
+  }
+]

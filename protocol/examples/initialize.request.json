@@ -1,0 +1,25 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "protocol_version": "2.0",
+    "host_info": {
+      "name": "god-code-ts-host",
+      "version": "0.1.0"
+    },
+    "capabilities": {
+      "mode": "headless",
+      "execute_tools": true,
+      "execute_tools_max_batch_size": 4,
+      "tools": [
+        "Read",
+        "Edit",
+        "Bash",
+        "ListFiles",
+        "Search",
+        "Write"
+      ]
+    }
+  }
+}

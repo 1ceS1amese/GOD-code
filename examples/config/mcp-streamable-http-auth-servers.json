@@ -1,0 +1,8 @@
+[
+  {
+    "id": "remote-auth-demo",
+    "transport": "streamable-http",
+    "url": "https://mcp.example.test/mcp",
+    "bearer_token_env": "GOD_CODE_DEMO_MCP_TOKEN"
+  }
+]

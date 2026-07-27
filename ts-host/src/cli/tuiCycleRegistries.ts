@@ -1,0 +1,350 @@
+import type { TuiProfileCycleRegistry } from "./tuiProfileRegistry.js";
+import type {
+  TuiLiveSessionCommandCategory,
+  TuiLiveSessionCommandLatestWidthBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandNeighborAdaptiveThresholdProfile,
+  TuiLiveSessionCommandNeighborVisibilityProfile,
+  TuiLiveSessionCommandPageSize,
+  TuiLiveSessionCommandSortMode,
+  TuiLiveSessionCommandSummaryVisibilityProfile,
+  TuiLiveSessionCommandUsageRankingLimit,
+  TuiLiveSessionCommandUsageRankingLineLimit
+} from "./tuiTypes.js";
+
+const LIVE_SESSION_COMMAND_CATEGORIES: TuiLiveSessionCommandCategory[] = ["all", "session", "view", "bulk"];
+const LIVE_SESSION_COMMAND_SORT_MODES: TuiLiveSessionCommandSortMode[] = ["catalog", "usage"];
+const LIVE_SESSION_COMMAND_USAGE_RANKING_LIMITS: TuiLiveSessionCommandUsageRankingLimit[] = [1, 3, 5];
+const LIVE_SESSION_COMMAND_USAGE_RANKING_LINE_LIMITS: TuiLiveSessionCommandUsageRankingLineLimit[] = [2, 3];
+const LIVE_SESSION_COMMAND_SUMMARY_VISIBILITY_PROFILES: TuiLiveSessionCommandSummaryVisibilityProfile[] = [
+  "all",
+  "history",
+  "ranking",
+  "minimal"
+];
+const LIVE_SESSION_COMMAND_NEIGHBOR_VISIBILITY_PROFILES: TuiLiveSessionCommandNeighborVisibilityProfile[] = [
+  "full",
+  "compact",
+  "standard"
+];
+const LIVE_SESSION_COMMAND_NEIGHBOR_ADAPTIVE_THRESHOLD_PROFILES: TuiLiveSessionCommandNeighborAdaptiveThresholdProfile[] = [
+  "balanced",
+  "dense",
+  "spacious"
+];
+const LIVE_SESSION_COMMAND_PAGE_SIZES: TuiLiveSessionCommandPageSize[] = [3, 5, 7];
+
+export const LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_PROFILES = ["compact", "full", "adaptive"] as const;
+
+export const LIVE_SESSION_COMMAND_LATEST_WIDTH_BUCKET_LABEL_VISIBILITY_PROFILES: TuiLiveSessionCommandLatestWidthBucketLabelVisibilityProfile[] = [
+  "shown",
+  "hidden",
+  "adaptive"
+];
+export const LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+
+export const LIVE_SESSION_COMMAND_LATEST_PROFILE_CYCLE_REGISTRY = {
+  cycle_live_session_command_latest_deepest_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_latest_deepest_bucket_label_text_visibility_profile: {
+    stateKey: "liveSessionCommandLatestDeepestBucketLabelTextVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_latest_deepest_bucket_label_text_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_latest_deepest_bucket_label_text_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_latest_deepest_bucket_label_text_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_latest_deepest_bucket_label_text_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_latest_deepest_bucket_label_text_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_latest_deepest_bucket_label_text_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_latest_deepest_bucket_label_text_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_latest_width_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandLatestWidthBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_LATEST_WIDTH_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  }
+} as const satisfies TuiProfileCycleRegistry;
+export const LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+export const LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES = [
+  "shown",
+  "hidden",
+  "adaptive"
+] as const;
+
+export const LIVE_SESSION_COMMAND_NEIGHBOR_LEGEND_PROFILE_CYCLE_REGISTRY = {
+  cycle_live_session_command_neighbor_progress_bucket_help_legend_profile: {
+    stateKey: "liveSessionCommandNeighborProgressBucketHelpLegendProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_PROFILES,
+    fallback: "compact"
+  },
+  cycle_live_session_command_neighbor_progress_bucket_help_legend_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_neighbor_progress_bucket_help_legend_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_neighbor_progress_bucket_help_legend_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_neighbor_progress_bucket_help_legend_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_neighbor_progress_bucket_help_legend_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_neighbor_progress_bucket_help_legend_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_neighbor_progress_bucket_help_legend_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_neighbor_progress_bucket_help_legend_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_LEGEND_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+} as const satisfies TuiProfileCycleRegistry;
+
+export const LIVE_SESSION_COMMAND_DEEPEST_NESTED_PROFILE_CYCLE_REGISTRY = {
+  cycle_live_session_command_deepest_nested_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandDeepestNestedBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_deepest_nested_bucket_label_text_visibility_profile: {
+    stateKey: "liveSessionCommandDeepestNestedBucketLabelTextVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_deepest_nested_bucket_label_text_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_deepest_nested_bucket_label_text_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_deepest_nested_bucket_label_text_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_deepest_nested_bucket_label_text_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+  cycle_live_session_command_deepest_nested_bucket_label_text_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_width_percentage_bucket_label_visibility_profile: {
+    stateKey: "liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_PROFILES,
+    fallback: "shown"
+  },
+} as const satisfies TuiProfileCycleRegistry;
+
+export const LIVE_SESSION_COMMAND_PROFILE_CYCLE_REGISTRY = {
+  ...LIVE_SESSION_COMMAND_LATEST_PROFILE_CYCLE_REGISTRY,
+  ...LIVE_SESSION_COMMAND_NEIGHBOR_LEGEND_PROFILE_CYCLE_REGISTRY,
+  ...LIVE_SESSION_COMMAND_DEEPEST_NESTED_PROFILE_CYCLE_REGISTRY
+} as const satisfies TuiProfileCycleRegistry;
+
+export const LIVE_SESSION_COMMAND_ENUM_CYCLE_REGISTRY = {
+  cycle_live_session_command_page_size: {
+    stateKey: "liveSessionCommandPageSize",
+    values: LIVE_SESSION_COMMAND_PAGE_SIZES,
+    fallback: 5
+  },
+  cycle_live_session_command_category: {
+    stateKey: "liveSessionCommandCategory",
+    values: LIVE_SESSION_COMMAND_CATEGORIES,
+    fallback: "all"
+  },
+  cycle_live_session_command_sort_mode: {
+    stateKey: "liveSessionCommandSortMode",
+    values: LIVE_SESSION_COMMAND_SORT_MODES,
+    fallback: "catalog"
+  },
+  cycle_live_session_command_usage_ranking_limit: {
+    stateKey: "liveSessionCommandUsageRankingLimit",
+    values: LIVE_SESSION_COMMAND_USAGE_RANKING_LIMITS,
+    fallback: 3
+  },
+  cycle_live_session_command_usage_ranking_line_limit: {
+    stateKey: "liveSessionCommandUsageRankingLineLimit",
+    values: LIVE_SESSION_COMMAND_USAGE_RANKING_LINE_LIMITS,
+    fallback: 2
+  },
+  cycle_live_session_command_summary_visibility_profile: {
+    stateKey: "liveSessionCommandSummaryVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_SUMMARY_VISIBILITY_PROFILES,
+    fallback: "all"
+  },
+  cycle_live_session_command_neighbor_visibility_profile: {
+    stateKey: "liveSessionCommandNeighborVisibilityProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_VISIBILITY_PROFILES,
+    fallback: "full"
+  },
+  cycle_live_session_command_neighbor_adaptive_threshold_profile: {
+    stateKey: "liveSessionCommandNeighborAdaptiveThresholdProfile",
+    values: LIVE_SESSION_COMMAND_NEIGHBOR_ADAPTIVE_THRESHOLD_PROFILES,
+    fallback: "balanced"
+  }
+} as const satisfies TuiProfileCycleRegistry;
+
+export const LIVE_SESSION_COMMAND_CYCLE_REGISTRY = {
+  ...LIVE_SESSION_COMMAND_PROFILE_CYCLE_REGISTRY,
+  ...LIVE_SESSION_COMMAND_ENUM_CYCLE_REGISTRY
+} as const satisfies TuiProfileCycleRegistry;

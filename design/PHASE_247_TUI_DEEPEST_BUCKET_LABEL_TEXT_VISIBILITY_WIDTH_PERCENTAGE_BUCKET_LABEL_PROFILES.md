@@ -1,0 +1,35 @@
+# Phase247 TUI Deepest Bucket Label Text Visibility Width Percentage Bucket Label Profiles
+
+## 目标
+
+将 Phase246 的最深层文字标签显隐宽度分段标签布尔开关升级为 `shown`、`hidden`、`adaptive` 配置档。
+
+## 已实现
+
+- 使用 `liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile` 替代布尔状态，默认值为 `shown`。
+- 命令面板内复用 `.`，按 `shown -> hidden -> adaptive -> shown` 循环。
+- `adaptive` 在 120 列边界解析：低于 120 列为 `hidden`，达到或超过 120 列为 `shown`。
+- formatter 根据有效配置决定是否输出 `(low/mid/high)`，并始终保留 `L/M/H`。
+- Help 和 Debug 显示配置值及自适应有效值：
+  - `visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels:shown@.`
+  - `visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels:hidden@.`
+  - `visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels:adaptive>hidden@.`
+  - `visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels:adaptive>shown@.`
+
+## 状态和接口边界
+
+- profile 仍属于 TS Host TUI 本地状态，不进入 protocol、Python Engine、provider、MCP 或 plugin 边界。
+- `tuiInput.ts` 只负责面板内 `.` 快捷键映射。
+- `tuiState.ts` 负责配置档循环和 120 列有效值解析。
+- Help、Debug 与 formatter 复用同一 resolver。
+
+## 验收
+
+- 默认、闭面板 no-op、三档循环和关闭/重开保持均有 reducer 测试。
+- 119/120 列 adaptive 边界、indicator 和隐藏标签 formatter 均有测试。
+- 输入映射、Help、Debug 精确输出测试通过。
+- TypeScript 编译和全量测试通过。
+
+## 下一阶段
+
+Phase248 可为 adaptive 配置档增加显式阈值提示。

@@ -1,0 +1,10 @@
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "result": {
+    "session_id": "session-1",
+    "turn_id": "turn-1",
+    "status": "accepted"
+  }
+}
+

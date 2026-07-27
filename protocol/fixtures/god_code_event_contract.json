@@ -1,0 +1,290 @@
+{
+  "contract_version": 2,
+  "valid": [
+    {
+      "name": "session_started",
+      "event": {
+        "event_type": "session_started",
+        "session_id": "session",
+        "sequence": 0,
+        "payload": { "cwd": "/workspace", "model_adapter": "fake" }
+      }
+    },
+    {
+      "name": "turn_started",
+      "event": {
+        "event_type": "turn_started",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": {}
+      }
+    },
+    {
+      "name": "assistant_delta",
+      "event": {
+        "event_type": "assistant_delta",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": { "delta": { "text": "partial" } }
+      }
+    },
+    {
+      "name": "assistant_message",
+      "event": {
+        "event_type": "assistant_message",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": { "message": { "role": "assistant", "content": "done" } }
+      }
+    },
+    {
+      "name": "tool_call_requested_with_metadata",
+      "event": {
+        "event_type": "tool_call_requested",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": {
+          "tool_call": {
+            "tool_call_id": "call",
+            "tool_name": "Read",
+            "input": { "path": "a" }
+          },
+          "execution_mode": "parallel",
+          "batch_id": "batch",
+          "batch_index": 0,
+          "batch_size": 1
+        }
+      }
+    },
+    {
+      "name": "tool_result_received_failure_with_metadata",
+      "event": {
+        "event_type": "tool_result_received",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 2,
+        "payload": {
+          "tool_call_id": "call",
+          "tool_name": "Read",
+          "result": {
+            "ok": false,
+            "output": { "partial": true },
+            "error": {
+              "code": "read_failed",
+              "message": "failed",
+              "details": { "path": "a" }
+            }
+          },
+          "batch_id": "batch"
+        }
+      }
+    },
+    {
+      "name": "turn_finished_success",
+      "event": {
+        "event_type": "turn_finished",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 3,
+        "payload": {
+          "status": "success",
+          "assistant_message": { "role": "assistant", "content": "done" }
+        }
+      }
+    },
+    {
+      "name": "god_code_error",
+      "event": {
+        "event_type": "god_code_error",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 2,
+        "payload": {
+          "error": {
+            "code": "provider_failed",
+            "message": "failed",
+            "details": { "retryable": false }
+          }
+        }
+      }
+    }
+  ],
+  "invalid": [
+    {
+      "name": "unknown_event_type",
+      "event": { "event_type": "unknown", "session_id": "session", "turn_id": "turn", "sequence": 1, "payload": {} }
+    },
+    {
+      "name": "blank_session_id",
+      "event": { "event_type": "turn_started", "session_id": "  ", "turn_id": "turn", "sequence": 1, "payload": {} }
+    },
+    {
+      "name": "session_started_nonzero_sequence",
+      "event": {
+        "event_type": "session_started",
+        "session_id": "session",
+        "sequence": 1,
+        "payload": { "cwd": "/workspace", "model_adapter": "fake" }
+      }
+    },
+    {
+      "name": "turn_event_nonpositive_sequence",
+      "event": {
+        "event_type": "turn_started",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 0,
+        "payload": {}
+      }
+    },
+    {
+      "name": "turn_event_fractional_sequence",
+      "event": {
+        "event_type": "turn_started",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1.5,
+        "payload": {}
+      }
+    },
+    {
+      "name": "turn_event_unsafe_sequence",
+      "event": {
+        "event_type": "turn_started",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 9007199254740992,
+        "payload": {}
+      }
+    },
+    {
+      "name": "session_started_with_turn_id",
+      "event": {
+        "event_type": "session_started",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 0,
+        "payload": { "cwd": "/workspace", "model_adapter": "fake" }
+      }
+    },
+    {
+      "name": "turn_event_without_turn_id",
+      "event": { "event_type": "turn_started", "session_id": "session", "sequence": 1, "payload": {} }
+    },
+    {
+      "name": "session_started_missing_model_adapter",
+      "event": {
+        "event_type": "session_started",
+        "session_id": "session",
+        "sequence": 0,
+        "payload": { "cwd": "/workspace" }
+      }
+    },
+    {
+      "name": "assistant_delta_missing_text",
+      "event": {
+        "event_type": "assistant_delta",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": { "delta": {} }
+      }
+    },
+    {
+      "name": "assistant_message_wrong_role",
+      "event": {
+        "event_type": "assistant_message",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": { "message": { "role": "user", "content": "wrong" } }
+      }
+    },
+    {
+      "name": "tool_call_input_not_object",
+      "event": {
+        "event_type": "tool_call_requested",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": {
+          "tool_call": { "tool_call_id": "call", "tool_name": "Read", "input": [] }
+        }
+      }
+    },
+    {
+      "name": "tool_call_blank_execution_mode",
+      "event": {
+        "event_type": "tool_call_requested",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": {
+          "tool_call": { "tool_call_id": "call", "tool_name": "Read", "input": {} },
+          "execution_mode": " "
+        }
+      }
+    },
+    {
+      "name": "tool_result_missing_error",
+      "event": {
+        "event_type": "tool_result_received",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": { "tool_call_id": "call", "tool_name": "Read", "result": { "ok": false } }
+      }
+    },
+    {
+      "name": "tool_result_success_with_error",
+      "event": {
+        "event_type": "tool_result_received",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": {
+          "tool_call_id": "call",
+          "tool_name": "Read",
+          "result": { "ok": true, "error": { "code": "failed", "message": "failed" } }
+        }
+      }
+    },
+    {
+      "name": "turn_success_without_message",
+      "event": {
+        "event_type": "turn_finished",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": { "status": "success" }
+      }
+    },
+    {
+      "name": "turn_cancelled_with_error",
+      "event": {
+        "event_type": "turn_finished",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": {
+          "status": "cancelled",
+          "error": { "code": "cancelled", "message": "cancelled" }
+        }
+      }
+    },
+    {
+      "name": "god_code_error_blank_code",
+      "event": {
+        "event_type": "god_code_error",
+        "session_id": "session",
+        "turn_id": "turn",
+        "sequence": 1,
+        "payload": { "error": { "code": " ", "message": "failed" } }
+      }
+    }
+  ]
+}

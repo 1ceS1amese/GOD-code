@@ -1,0 +1,48 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "create_session",
+  "params": {
+    "session_id": "session-123",
+    "cwd": "/workspace",
+    "tool_catalog": [
+      {
+        "name": "Read",
+        "description": "Read a UTF-8 text file"
+      },
+      {
+        "name": "Edit",
+        "description": "Apply a literal string replacement"
+      },
+      {
+        "name": "Bash",
+        "description": "Run a shell command"
+      },
+      {
+        "name": "ListFiles",
+        "description": "List files and directories"
+      },
+      {
+        "name": "Search",
+        "description": "Search UTF-8 text files"
+      },
+      {
+        "name": "Write",
+        "description": "Write a UTF-8 text file"
+      }
+    ],
+    "model_adapter": "fake",
+    "initial_messages": [
+      {
+        "kind": "user",
+        "role": "user",
+        "content": "read README.md"
+      },
+      {
+        "kind": "assistant",
+        "role": "assistant",
+        "content": "Read completed for README.md"
+      }
+    ]
+  }
+}

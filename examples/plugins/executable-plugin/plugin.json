@@ -1,0 +1,30 @@
+{
+  "id": "executable-plugin",
+  "name": "Executable Plugin Example",
+  "version": "0.1.0",
+  "runtime": {
+    "kind": "node-subprocess",
+    "entry": "handler.mjs",
+    "timeout_ms": 5000,
+    "env_keys": ["GOD_CODE_EXECUTABLE_PLUGIN_TOKEN"]
+  },
+  "tools": [
+    {
+      "name": "plugin.executable.echo",
+      "description": "Echo a value through a plugin-owned subprocess handler.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": ["value"],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "promptFragments": [
+    "Use plugin.executable.echo when the user asks to echo through the executable plugin."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "jsonrpc": "2.0",
+  "method": "god_code_event",
+  "params": {
+    "event_type": "assistant_message",
+    "session_id": "session-123",
+    "turn_id": "turn-123",
+    "sequence": 1,
+    "payload": {
+      "message": {
+        "role": "assistant",
+        "content": "Read succeeded."
+      }
+    }
+  }
+}

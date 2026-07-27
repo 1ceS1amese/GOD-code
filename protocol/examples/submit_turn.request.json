@@ -1,0 +1,14 @@
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "submit_turn",
+  "params": {
+    "session_id": "session-123",
+    "prompt": {
+      "role": "user",
+      "content": "read README.md"
+    },
+    "turn_options": {}
+  }
+}
+

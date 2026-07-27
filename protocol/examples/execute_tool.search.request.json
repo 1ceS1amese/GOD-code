@@ -1,0 +1,17 @@
+{
+  "jsonrpc": "2.0",
+  "id": 9,
+  "method": "execute_tool",
+  "params": {
+    "session_id": "session-123",
+    "turn_id": "turn-123",
+    "tool_call_id": "tool-search-123",
+    "tool_name": "Search",
+    "input": {
+      "path": "README.md",
+      "pattern": "GOD-code",
+      "recursive": true,
+      "max_matches": 100
+    }
+  }
+}

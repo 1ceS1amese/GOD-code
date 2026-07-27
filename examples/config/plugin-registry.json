@@ -1,0 +1,16 @@
+{
+  "plugins": [
+    {
+      "id": "executable-plugin",
+      "path": "../plugins/executable-plugin",
+      "enabled": true,
+      "tags": ["demo", "sandbox"]
+    },
+    {
+      "id": "demo-skill",
+      "path": "../plugins/demo-skill",
+      "enabled": false,
+      "tags": ["demo", "skill"]
+    }
+  ]
+}

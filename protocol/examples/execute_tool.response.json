@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 7,
+  "result": {
+    "tool_call_id": "tool-123",
+    "ok": true,
+    "output": {
+      "path": "README.md",
+      "content": "# Example"
+    }
+  }
+}
+

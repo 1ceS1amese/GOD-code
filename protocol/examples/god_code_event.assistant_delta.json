@@ -1,0 +1,11 @@
+{
+  "event_type": "assistant_delta",
+  "session_id": "session-1",
+  "turn_id": "turn-1",
+  "sequence": 1,
+  "payload": {
+    "delta": {
+      "text": "partial assistant text"
+    }
+  }
+}

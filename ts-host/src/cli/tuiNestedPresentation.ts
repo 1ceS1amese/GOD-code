@@ -1,0 +1,931 @@
+import {
+  formatTuiAdaptiveVisibilityIndicator,
+  resolveTuiAdaptiveVisibilityProfile,
+  tuiAdaptiveVisibilityThresholdDistance
+} from "./tuiAdaptiveVisibility.js";
+import { formatTuiWidthMetrics } from "./tuiWidthMetrics.js";
+import * as commandPaletteConstants from "./tuiCommandPaletteConstants.js";
+import {
+  liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage,
+  liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket,
+  liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel
+} from "./tuiNeighborLegendPresentation.js";
+import type {
+  TuiLiveSessionCommandDeepestNestedBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityProfile,
+  TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityProfile,
+  TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  TuiLiveSessionCommandLatestWidthBucketLabelVisibilityProfile
+} from "./tuiTypes.js";
+const {
+  LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+  LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_SHORTCUT,
+  LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_SHORTCUT,
+  LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_SHORTCUT,
+  LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_SHORTCUT,
+  LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+  LIVE_SESSION_COMMAND_LATEST_WIDTH_BUCKET_LABEL_VISIBILITY_SHORTCUT
+} = commandPaletteConstants;
+
+export function resolveLiveSessionCommandDeepestNestedBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export const liveSessionCommandDeepestNestedBucketLabelVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandDeepestNestedBucketLabelVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandDeepestNestedBucketLabelVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export function liveSessionCommandDeepestNestedBucketLabelIndicator(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandDeepestNestedBucketLabelVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandDeepestNestedBucketLabelTextVisibilityProfile(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityIndicator(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelIndicator(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityIndicator(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_SHORTCUT,
+    widthIndicator: () => liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityIndicator(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_SHORTCUT,
+    widthIndicator: () => liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityIndicator(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export function liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelIndicator(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandLatestDeepestBucketLabelVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export function resolveLiveSessionCommandLatestDeepestBucketLabelTextVisibilityProfile(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export function liveSessionCommandLatestDeepestBucketLabelTextIndicator(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_SHORTCUT,
+    widthIndicator: () => liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelIndicator(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelIndicator(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  widthPercentageBucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, widthPercentageBucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelIndicator(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  widthPercentageBucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, widthPercentageBucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelIndicator(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelIndicator(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelProfile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile = "shown"
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, resolveLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(bucketLabelProfile, maxWidth) === "shown")
+  });
+}
+
+export function resolveLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelIndicator(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelProfile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile = "shown"
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, resolveLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(bucketLabelProfile, maxWidth) === "shown")
+  });
+}
+
+export function resolveLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelIndicator(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_LATEST_DEEPEST_BUCKET_LABEL_TEXT_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_VISIBILITY_WIDTH_PERCENTAGE_BUCKET_LABEL_SHORTCUT,
+    widthIndicator: () => liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}
+
+export function resolveLiveSessionCommandLatestWidthBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandLatestWidthBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestWidthBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandLatestWidthBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestWidthBucketLabelVisibilityWidthIndicator(maxWidth: number): string {
+  return formatTuiWidthMetrics(maxWidth, LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH);
+}
+
+export const liveSessionCommandLatestWidthBucketLabelVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandLatestWidthBucketLabelVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandLatestWidthBucketLabelVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export function liveSessionCommandLatestWidthBucketLabelVisibilityIndicator(
+  profile: TuiLiveSessionCommandLatestWidthBucketLabelVisibilityProfile,
+  maxWidth = 80
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "latest_width_bucket_label",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_LATEST_WIDTH_BUCKET_LABEL_VISIBILITY_SHORTCUT,
+    widthIndicator: () => liveSessionCommandLatestWidthBucketLabelVisibilityWidthIndicator(maxWidth)
+  });
+}
+
+export function resolveLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthIndicator(
+  maxWidth: number,
+  bucketLabelVisible = true
+): string {
+  return formatTuiWidthMetrics(
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    bucketLabelVisible
+  );
+}
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandLatestDeepestBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export function liveSessionCommandLatestDeepestBucketLabelVisibilityThresholdDistance(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): number | null {
+  return tuiAdaptiveVisibilityThresholdDistance(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export function resolveLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityProfile,
+  maxWidth: number
+): "shown" | "hidden" {
+  return resolveTuiAdaptiveVisibilityProfile(
+    profile,
+    maxWidth,
+    LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH
+  );
+}
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentage = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentage;
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucket = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucket;
+
+export const liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabelVisibilityWidthPercentageBucketLabel = liveSessionCommandNeighborProgressBucketHelpLegendWidthPercentageBucketLabel;
+
+export function liveSessionCommandDeepestNestedBucketLabelTextIndicator(
+  profile: TuiLiveSessionCommandDeepestNestedBucketLabelTextVisibilityProfile,
+  maxWidth = 80,
+  bucketLabelVisible = true
+): string {
+  return formatTuiAdaptiveVisibilityIndicator({
+    name: "visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels",
+    profile,
+    maxWidth,
+    threshold: LIVE_SESSION_COMMAND_NEIGHBOR_PROGRESS_BUCKET_HELP_ADAPTIVE_WIDTH,
+    shortcut: LIVE_SESSION_COMMAND_DEEPEST_NESTED_BUCKET_LABEL_TEXT_SHORTCUT,
+    widthIndicator: () => liveSessionCommandDeepestNestedBucketLabelTextVisibilityWidthIndicator(maxWidth, bucketLabelVisible)
+  });
+}

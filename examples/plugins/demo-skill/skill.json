@@ -1,0 +1,29 @@
+{
+  "id": "demo-skill",
+  "name": "Demo Skill",
+  "version": "0.1.0",
+  "tools": [
+    {
+      "name": "skill.demo.summarize",
+      "description": "Example skill tool declaration using the same manifest schema as plugins.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "permissions": [
+    "prompt-fragment"
+  ],
+  "promptFragments": [
+    "Demo skill prompt fragment. Keep outputs concise and cite tool results."
+  ]
+}

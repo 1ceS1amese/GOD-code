@@ -1,0 +1,53 @@
+name: Usage question
+description: Ask for help with documented GOD-code behavior
+title: "[Question]: "
+labels: []
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read README.md and SUPPORT.md first. Remove all credentials, private paths, and sensitive logs.
+        Security vulnerabilities must be reported privately according to SECURITY.md.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight checklist
+      options:
+        - label: I reviewed README.md and SUPPORT.md.
+          required: true
+        - label: I searched existing issues.
+          required: true
+        - label: This question contains no secret or private vulnerability details.
+          required: true
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: What are you trying to do?
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempts
+    attributes:
+      label: What have you tried?
+      description: Include commands and sanitized diagnostics.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Node.js, Python, provider mode, and relevant configuration.
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Relevant output
+      description: Paste only minimal, redacted output.
+      render: shell

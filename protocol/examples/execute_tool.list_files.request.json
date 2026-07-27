@@ -1,0 +1,16 @@
+{
+  "jsonrpc": "2.0",
+  "id": 8,
+  "method": "execute_tool",
+  "params": {
+    "session_id": "session-123",
+    "turn_id": "turn-123",
+    "tool_call_id": "tool-list-123",
+    "tool_name": "ListFiles",
+    "input": {
+      "path": ".",
+      "recursive": false,
+      "max_entries": 200
+    }
+  }
+}

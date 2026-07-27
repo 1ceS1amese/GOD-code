@@ -1,0 +1,86 @@
+name: Feature request
+description: Propose a scoped and testable improvement
+title: "[Feature]: "
+labels: []
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the user problem before the implementation. Large protocol or architecture changes should start as a design discussion.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight checklist
+      options:
+        - label: I searched existing issues and project documentation.
+          required: true
+        - label: This request fits the experimental coding-agent architecture scope.
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What is currently difficult or impossible, and who is affected?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe externally observable behavior, not only internal code changes.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Primary area
+      options:
+        - TS Host and CLI
+        - Python Engine
+        - Provider
+        - Protocol and JSON-RPC
+        - MCP
+        - Plugin or Skill
+        - Session, transcript, or TUI
+        - Security and audit
+        - Documentation and tooling
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and security impact
+      description: Note CLI, wire, config, persistence, permission, network, or secret-handling effects.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Explain current workarounds and rejected alternatives.
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Provide testable conditions that define completion.
+      placeholder: |
+        - [ ] Public behavior is documented.
+        - [ ] Offline tests cover success and failure paths.
+        - [ ] Existing wire and CLI contracts remain compatible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional context
+      description: Add diagrams, examples, prior art, or related design files.

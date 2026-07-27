@@ -1,0 +1,40 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "engine_info": {
+      "name": "god-code-py-engine",
+      "version": "0.1.0",
+      "protocol_version": "2.0"
+    },
+    "supported_tools": [
+      {
+        "name": "Read",
+        "description": "Read a UTF-8 text file from the host filesystem."
+      },
+      {
+        "name": "Edit",
+        "description": "Apply a literal string replacement to a UTF-8 text file."
+      },
+      {
+        "name": "Bash",
+        "description": "Run a shell command on the host via bash -lc."
+      },
+      {
+        "name": "ListFiles",
+        "description": "List files and directories from the host filesystem."
+      },
+      {
+        "name": "Search",
+        "description": "Search UTF-8 text files with literal string matching."
+      },
+      {
+        "name": "Write",
+        "description": "Write a UTF-8 text file on the host filesystem."
+      }
+    ],
+    "supported_model_adapters": [
+      "fake"
+    ]
+  }
+}

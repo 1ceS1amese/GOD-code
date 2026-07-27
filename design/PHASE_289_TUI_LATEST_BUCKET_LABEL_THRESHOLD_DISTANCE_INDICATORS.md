@@ -1,0 +1,25 @@
+# Phase289 TUI Latest Bucket Label Threshold Distance Indicators
+
+## 状态
+
+代码、测试与文档已完成。
+
+## 目标与实现
+
+在 Phase288 最新 adaptive 阈值提示中展示距离共享 120 列阈值还差多少列。
+
+- 新增纯函数 `liveSessionCommandLatestDeepestBucketLabelVisibilityThresholdDistance(...)`。
+- 仅当 profile 为 `adaptive` 且宽度低于 120 时返回 `120 - maxWidth`。
+- 119 列输出 `visibility_bucket_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels_labels:adaptive>hidden+1[120]@9`。
+- 120 列及以上保持 `adaptive>shown[120]@9`。
+- 显式 `shown/hidden` 不显示距离。
+- Help、Debug 和 indicator 共用同一 helper 结果。
+
+## 边界与验收
+
+- 不新增状态、action、快捷键或配置项。
+- 本阶段不显示当前宽度，也不修改任何跨进程接口。
+- helper 覆盖 adaptive 80、119、120 及显式 profile。
+- 119/120 列 indicator、Help 和 Debug 边界输出通过测试。
+- TypeScript 编译、聚焦测试和全量测试通过。
+- Phase290 已加入当前宽度与阈值组合，例如 `[119/120]`。

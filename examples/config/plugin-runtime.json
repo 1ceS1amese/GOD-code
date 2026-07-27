@@ -1,0 +1,4 @@
+{
+  "plugin_dirs": ["../plugins/executable-plugin"],
+  "enabled_plugin_ids": ["executable-plugin"]
+}

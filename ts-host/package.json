@@ -1,0 +1,35 @@
+{
+  "name": "god-code-ts-host",
+  "version": "0.1.0",
+  "description": "TypeScript host runtime and CLI for the GOD-code AI coding agent architecture",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "ai-agent",
+    "coding-agent",
+    "json-rpc",
+    "mcp",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=18.19.0"
+  },
+  "bin": {
+    "god-code": "./dist/cli/main.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.25.76"
+  }
+}

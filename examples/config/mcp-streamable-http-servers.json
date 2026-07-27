@@ -1,0 +1,10 @@
+[
+  {
+    "id": "remote-demo",
+    "transport": "streamable-http",
+    "url": "https://mcp.example.test/mcp",
+    "headers": {
+      "Authorization": "Bearer replace-me"
+    }
+  }
+]

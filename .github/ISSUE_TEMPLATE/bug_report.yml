@@ -1,0 +1,91 @@
+name: Bug report
+description: Report a reproducible defect in GOD-code
+title: "[Bug]: "
+labels: []
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Do not include API keys, tokens, private paths, or sensitive logs.
+        Security vulnerabilities must follow SECURITY.md and must not be disclosed in a public issue.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight checklist
+      options:
+        - label: I searched existing issues for the same problem.
+          required: true
+        - label: I removed credentials and sensitive data from this report.
+          required: true
+        - label: This is not a privately reportable security vulnerability.
+          required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Provide the GOD-code version or commit identifier.
+      placeholder: "0.1.0 or commit SHA"
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Node.js, npm, Python, shell, and relevant configuration mode.
+      placeholder: |
+        OS: Ubuntu 24.04
+        Node.js: 18.19.1
+        npm: 9.2.0
+        Python: 3.12.3
+        Provider: fake
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: List the smallest commands and inputs that reproduce the problem.
+      placeholder: |
+        1. Run ...
+        2. Configure ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include concise, redacted output or logs when useful.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: fake_provider
+    attributes:
+      label: Reproducible with the fake provider
+      options:
+        - "Yes"
+        - "No"
+        - "Not applicable"
+        - "Not tested"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional context
+      description: Add related tests, sanitized diagnostics, screenshots, or suspected components.

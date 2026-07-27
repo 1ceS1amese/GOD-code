@@ -1,0 +1,8 @@
+[
+  {
+    "id": "legacy-demo",
+    "transport": "sse",
+    "url": "https://mcp.example.test/sse",
+    "bearer_token_env": "GOD_CODE_DEMO_MCP_TOKEN"
+  }
+]

@@ -1,0 +1,79 @@
+[
+  {
+    "event_type": "session_started",
+    "session_id": "session-1",
+    "payload": {
+      "cwd": "<cwd>",
+      "model_adapter": "fake"
+    },
+    "sequence": 0
+  },
+  {
+    "event_type": "turn_started",
+    "session_id": "session-1",
+    "payload": {},
+    "turn_id": "turn-1",
+    "sequence": 1
+  },
+  {
+    "event_type": "tool_call_requested",
+    "session_id": "session-1",
+    "payload": {
+      "tool_call": {
+        "tool_call_id": "tool-call-1",
+        "tool_name": "Edit",
+        "input": {
+          "path": "fixture.txt",
+          "find": "hello",
+          "replace": "world"
+        }
+      },
+      "execution_mode": "serial"
+    },
+    "turn_id": "turn-1",
+    "sequence": 2
+  },
+  {
+    "event_type": "tool_result_received",
+    "session_id": "session-1",
+    "payload": {
+      "tool_call_id": "tool-call-1",
+      "tool_name": "Edit",
+      "result": {
+        "ok": true,
+        "output": {
+          "path": "<cwd>/fixture.txt",
+          "applied": true,
+          "replacements": 1
+        }
+      }
+    },
+    "turn_id": "turn-1",
+    "sequence": 3
+  },
+  {
+    "event_type": "assistant_message",
+    "session_id": "session-1",
+    "payload": {
+      "message": {
+        "role": "assistant",
+        "content": "Edit completed for <cwd>/fixture.txt with 1 replacement(s)."
+      }
+    },
+    "turn_id": "turn-1",
+    "sequence": 4
+  },
+  {
+    "event_type": "turn_finished",
+    "session_id": "session-1",
+    "payload": {
+      "status": "success",
+      "assistant_message": {
+        "role": "assistant",
+        "content": "Edit completed for <cwd>/fixture.txt with 1 replacement(s)."
+      }
+    },
+    "turn_id": "turn-1",
+    "sequence": 5
+  }
+]

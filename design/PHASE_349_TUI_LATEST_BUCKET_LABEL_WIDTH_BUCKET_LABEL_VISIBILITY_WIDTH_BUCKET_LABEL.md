@@ -1,0 +1,27 @@
+# Phase349 TUI Latest Bucket Label Width Bucket Label Visibility Width Bucket Label
+
+## 状态
+
+代码、测试与文档已完成。
+
+## 目标与实现
+
+在 Phase348 最新 `L/M/H` 分段后补充 `low/mid/high` 文字标签。
+
+- 使用同层 label helper，并委托既有共享标签映射。
+- 最新组合形成 `L(low)`、`M(mid)`、`H(high)`。
+- 80 列输出 `adaptive>hidden+40[80/120=66%H(high)]@2`。
+- 119 列输出 `adaptive>hidden+1[119/120=99%H(high)]@2`。
+- 120 列输出 `adaptive>shown[120/120=100%H(high)]@2`。
+- 180 列保留真实宽度并输出 `180/120=100%H(high)`。
+
+## 接口边界与验收
+
+- 不新增状态、action、快捷键或配置项。
+- 不改变 profile resolver、距离、百分比或 bucket 算法。
+- 不修改 protocol、Python Engine、provider、MCP、plugin 或 session schema。
+- label helper 覆盖 low、mid、high 映射。
+- width helper、indicator、Help 和 Debug 共用 label 结果。
+- TypeScript 编译、聚焦测试、全量测试和跨层接口扫描通过。
+
+后续 Phase350 已为最新 low/mid/high 文字标签增加独立显隐控制。
